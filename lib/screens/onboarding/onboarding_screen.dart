@@ -1,181 +1,185 @@
 import 'package:flutter/material.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
-
-  @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
-}
-
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  // Simulate opening an overlay on button click.
-  void _onPepiconsPressed() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Frame 42'),
-        content: const Text('This is the overlay content.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
-          ),
-        ],
-      ),
-    );
-  }
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    return MaterialApp(
+      title: 'Spent Digital Lab',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: const OnboardingScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
 
+class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
-      body: Stack(
-        children: [
-          // Logo at top-left: width 371, height 104, top 65px, left 47px
-          Positioned(
-            top: 65,
-            left: 47,
-            child: Opacity(
-              opacity: 1.0,
-              child: Image.asset(
-                'lib/assets/images/spent1.png',
-                width: 371,
-                height: 104,
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-
-          // Pepicons button at top-right: width 118, height 118, top 169px
-          Positioned(
-            top: 169,
-            right: 20,
-            child: GestureDetector(
-              onTap: _onPepiconsPressed,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.white,
+        child: Stack(
+          children: [
+            // Top logo/image section
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
               child: Container(
-                width: 118,
-                height: 118,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  // ignore: deprecated_member_use
-                  color: Colors.white.withOpacity(0.9),
-                ),
-                child: const Icon(
-                  Icons.info_outline,
-                  size: 60,
-                  color: Colors.blue,
-                ),
-              ),
-            ),
-          ),
-
-          // Header text centered at bottom: width 1000, height 116, top 1064px
-          // Font: Inter, weight 400, size 48px, line-height 100%, text-align center
-          Positioned(
-            top: 1064,
-            left: (screenWidth - 1000) / 2,
-            child: SizedBox(
-              width: 1000,
-              height: 116,
-              child: Center(
-                child: Text(
-                  'Advancing Blockchain Research, Innovation & Policy in Africa',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 48,
-                    height: 1.0,
-                    letterSpacing: 0,
-                    color: Colors.white,
+                height: MediaQuery.of(context).size.height * 0.4,
+                decoration: const BoxDecoration(color: Colors.white),
+                child: Center(
+                  child: Image.asset(
+                    'lib/assets/images/spent1.png',
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
             ),
-          ),
 
-          // Skip button (top-right corner)
-          Positioned(
-            top: 16,
-            right: 16,
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const HomeScreen()),
-                );
-              },
-              child: const Text(
-                'Skip',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
-            ),
-          ),
+            // Text content section positioned below the image
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.4,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 40),
 
-          // Get Started button (bottom-right)
-          Positioned(
-            bottom: 32,
-            right: 32,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => const HomeScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.blue,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
+                    // Main heading
+                    Text(
+                      'Advancing Blockchain Research, Innovation\n& Policy in Africa',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        height: 1.3,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+
+                    const SizedBox(height: 40),
+
+                    // Divider line
+                    Container(width: 80, height: 2, color: Colors.blue),
+
+                    const SizedBox(height: 40),
+
+                    // Description text - EXACT text from image
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Spent Digital Lab',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const TextSpan(
+                            text: ' is a ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'Blockchain Research & Innovation\n',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const TextSpan(
+                            text: 'Institute ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const TextSpan(
+                            text:
+                                'advancing decentralized technologies through\n',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'research, education, and innovation.',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+
+                    const Spacer(),
+
+                    // Bottom indicator dots
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 12,
+                            height: 12,
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          Container(
+                            width: 8,
+                            height: 8,
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          Container(
+                            width: 8,
+                            height: 8,
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: const Text(
-                'Get Started',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// HomeScreen: Simple home screen shown after onboarding.
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 250, 250, 250),
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text(
-          'SPENT DIGITAL LABS',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Welcome to Spent Digital Labs',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Advancing Blockchain Research, Innovation & Policy in Africa',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.black54),
             ),
           ],
         ),
