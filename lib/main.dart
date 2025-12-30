@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/onboarding/onboarding_screen.dart';
+import 'screens/onboarding/create_account_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
